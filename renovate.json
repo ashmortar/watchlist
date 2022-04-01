@@ -19,5 +19,5 @@
       "groupSlug": "all-minor-patch"
     }
   ],
-  "prConcurrentLimit": 3
+  "prConcurrentLimit": 1
 }
