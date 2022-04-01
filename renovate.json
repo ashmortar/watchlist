@@ -1,4 +1,24 @@
 {
-  "extends": ["config:base", ":rebaseStalePrs"],
-  "baseBranches": ["main", "dev"]
+  "extends": [
+    "config:base",
+    ":rebaseStalePrs"
+  ],
+  "baseBranches": [
+    "main",
+    "dev"
+  ],
+  "packageRules": [
+    {
+      "matchPackagePatterns": [
+        "*"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "groupName": "all non-major dependencies",
+      "groupSlug": "all-minor-patch"
+    }
+  ],
+  "prConcurrentLimit": 3
 }
