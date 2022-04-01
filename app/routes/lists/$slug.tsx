@@ -1,10 +1,8 @@
 import {
   ActionFunction,
-  Form,
   json,
   LoaderFunction,
   redirect,
-  useActionData,
   useFetcher,
   useLoaderData,
   useParams,
@@ -12,18 +10,12 @@ import {
 
 import { FC, forwardRef, useEffect, useMemo, useRef, useState } from "react";
 import {
-  Autocomplete,
   SelectItem,
-  Container,
   Group,
   Select,
   SelectItemProps,
-  Space,
   Text,
-  TextIn,
-  SelectItemput,
   Button,
-  AspectRatio,
 } from "@mantine/core";
 import { useUser } from "~/utils";
 import { MovieResult, TvResult } from "~/services/moviedb.server";

@@ -22,7 +22,6 @@ import {
   MantineProvider,
   MediaQuery,
   Navbar,
-  Text,
   useMantineTheme,
 } from "@mantine/core";
 import { FC, useState } from "react";

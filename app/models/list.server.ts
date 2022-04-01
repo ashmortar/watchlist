@@ -6,9 +6,7 @@ import { MovieResult, TvResult } from "~/services/moviedb.server";
 
 export type { List, Item, ListMember } from "@prisma/client";
 
-export async function getListBySlug(
-  slug: List["slug"]
-): Promise<
+export async function getListBySlug(slug: List["slug"]): Promise<
   | (List & {
       items: (Omit<Item, "itemJson"> & { item: MovieResult | TvResult })[];
     } & { members: ListMember[] } & { owner: User })

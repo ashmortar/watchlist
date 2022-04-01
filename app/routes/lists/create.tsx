@@ -1,11 +1,4 @@
-import {
-  Button,
-  Container,
-  Group,
-  Space,
-  Text,
-  TextInput,
-} from "@mantine/core";
+import { Button, Space, Text, TextInput } from "@mantine/core";
 import { FC } from "react";
 import { ActionFunction, Form, json, redirect } from "remix";
 import { createList } from "~/models/list.server";
