@@ -3,6 +3,12 @@
   "private": true,
   "description": "A web app to search for, organize and ",
   "license": "",
+  "homepage": "https://watchlist.fly.dev",
+  "author": {
+    "name": "Aaron Ross",
+    "email": "ashmortar@gmail.com",
+    "url": "https://github.com/ashmortar"
+  },
   "sideEffects": false,
   "scripts": {
     "build": "run-s build:*",
