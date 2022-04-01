@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 
 import { prisma } from "~/db.server";
 
+
 export type { User } from "@prisma/client";
 
 export async function getUserById(id: User["id"]): Promise<User | null> {
@@ -10,8 +11,18 @@ export async function getUserById(id: User["id"]): Promise<User | null> {
 }
 
 export async function getUserByEmailAndOrUsername({ email, username }: { email?: User["email"], username?: User["username"] }): Promise<User | null> {
-  const args = { ...(email ? { email } : {}), ...(username ? { username } : {}) };
-  return prisma.user.findUnique({ where: args });
+  let where: { email: string } | { username: string };
+  if (email) {
+    where = { email }
+  } else if (username) {
+    where = { username }
+  } else {
+    throw new Error("No email or username provided");
+  }
+
+  return prisma.user.findUnique({
+    where
+  });
 }
 
 export async function createUser({ email, password, username }: { email: User["email"], password: string, username: User["username"] }): Promise<User> {

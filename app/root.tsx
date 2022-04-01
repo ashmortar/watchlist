@@ -69,7 +69,7 @@ const App: FC = () => {
 
                     <Button variant="subtle" to={"/lists"} component={Link}>Lists</Button>
                     <Button variant="subtle" to={"/profile"} component={Link}>Profile</Button>
-                    <Form style={{ alignSelf: "center" }} action="/logout" method="post"><Button type="submit" variant="subtle">Logout</Button></Form>
+                    <Form style={{ alignSelf: "center" }} action="/logout" method="post"><Button data-testid="logout-button" type="submit" variant="subtle">Logout</Button></Form>
                   </>
                 ) : (
                   <>

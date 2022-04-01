@@ -11,12 +11,12 @@ const Index: FC = () => {
       <Text size="xl">Welcome to Watchlist</Text>
       <Space h="lg" />
       {user ? (
-        <Button style={{ width: "100%" }} variant="subtle" component={Link} to="/lists">your lists</Button>
+        <Button style={{ width: "100%" }} data-testid="your-lists" variant="subtle" component={Link} to="/lists">your lists</Button>
       ) : (
         <Group>
-          <Button variant="subtle" component={Link} to={"/login"}>Login</Button>
+          <Button data-testid="login-button" variant="subtle" component={Link} to={"/login"}>Login</Button>
           <Text>or</Text>
-          <Button variant="subtle" component={Link} to={"/join"}>Join</Button>
+          <Button data-testid="join-button" variant="subtle" component={Link} to={"/join"}>Join</Button>
         </Group>
       )
       }
