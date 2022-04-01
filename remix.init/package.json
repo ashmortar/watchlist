@@ -4,8 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "@iarna/toml": "^2.2.5",
-    "inquirer": "^8.2.1",
-    "sort-package-json": "^1.54.0"
+    "@iarna/toml": "2.2.5",
+    "inquirer": "8.2.1",
+    "sort-package-json": "1.54.0"
   }
 }
