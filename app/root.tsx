@@ -13,7 +13,18 @@ import {
 import type { MetaFunction, LoaderFunction } from "remix";
 
 import { getUser } from "./session.server";
-import { AppShell, Burger, Button, Group, Header, MantineProvider, MediaQuery, Navbar, Text, useMantineTheme } from "@mantine/core";
+import {
+  AppShell,
+  Burger,
+  Button,
+  Group,
+  Header,
+  MantineProvider,
+  MediaQuery,
+  Navbar,
+  Text,
+  useMantineTheme,
+} from "@mantine/core";
 import { FC, useState } from "react";
 
 export const meta: MetaFunction = () => ({
@@ -36,7 +47,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 const App: FC = () => {
   const { user } = useLoaderData<LoaderData>();
   const [opened, setOpened] = useState(false);
-  const theme = useMantineTheme()
+  const theme = useMantineTheme();
   return (
     <html lang="en" className="h-full">
       <head>
@@ -44,9 +55,11 @@ const App: FC = () => {
         <Links />
       </head>
       <body>
-        <MantineProvider theme={{
-          fontFamily: "Roboto, sans-serif",
-        }}>
+        <MantineProvider
+          theme={{
+            fontFamily: "Roboto, sans-serif",
+          }}
+        >
           <AppShell
             // navbarOffsetBreakpoint controls when navbar should no longer be offset with padding-left
             navbarOffsetBreakpoint="sm"
@@ -66,15 +79,34 @@ const App: FC = () => {
               >
                 {user ? (
                   <>
-
-                    <Button variant="subtle" to={"/lists"} component={Link}>Lists</Button>
-                    <Button variant="subtle" to={"/profile"} component={Link}>Profile</Button>
-                    <Form style={{ alignSelf: "center" }} action="/logout" method="post"><Button data-testid="logout-button" type="submit" variant="subtle">Logout</Button></Form>
+                    <Button variant="subtle" to={"/lists"} component={Link}>
+                      Lists
+                    </Button>
+                    <Button variant="subtle" to={"/profile"} component={Link}>
+                      Profile
+                    </Button>
+                    <Form
+                      style={{ alignSelf: "center" }}
+                      action="/logout"
+                      method="post"
+                    >
+                      <Button
+                        data-testid="logout-button"
+                        type="submit"
+                        variant="subtle"
+                      >
+                        Logout
+                      </Button>
+                    </Form>
                   </>
                 ) : (
                   <>
-                    <Button variant="subtle" to={"/login"} component={Link}>Log In</Button>
-                    <Button variant="subtle" to={"/join"} component={Link}>Join</Button>
+                    <Button variant="subtle" to={"/login"} component={Link}>
+                      Log In
+                    </Button>
+                    <Button variant="subtle" to={"/join"} component={Link}>
+                      Join
+                    </Button>
                   </>
                 )}
               </Navbar>
@@ -82,8 +114,14 @@ const App: FC = () => {
             header={
               <Header height={70} p="md">
                 {/* Handle other responsive styles with MediaQuery component or createStyles function */}
-                <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
-                  <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    height: "100%",
+                  }}
+                >
+                  <MediaQuery largerThan="sm" styles={{ display: "none" }}>
                     <Burger
                       opened={opened}
                       onClick={() => setOpened((o) => !o)}
@@ -92,12 +130,22 @@ const App: FC = () => {
                       mr="xl"
                     />
                   </MediaQuery>
-                  <Button component={Link} to="/" variant="subtle" size="lg">Watchlist</Button>
+                  <Button component={Link} to="/" variant="subtle" size="lg">
+                    Watchlist
+                  </Button>
                 </div>
               </Header>
             }
           >
-            <Group direction="column" style={{ minHeight: "100%", minWidth: "100%", alignItems: "flex-start", justifyContent: "flex-start" }}>
+            <Group
+              direction="column"
+              style={{
+                minHeight: "100%",
+                minWidth: "100%",
+                alignItems: "flex-start",
+                justifyContent: "flex-start",
+              }}
+            >
               <Outlet />
             </Group>
           </AppShell>
@@ -108,6 +156,6 @@ const App: FC = () => {
       </body>
     </html>
   );
-}
+};
 
 export default App;

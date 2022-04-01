@@ -1,7 +1,6 @@
 import { FC } from "react";
 import { LoaderFunction, json, Outlet } from "remix";
 
-
 import { getUsersLists } from "~/models/list.server";
 import { requireUserId } from "~/session.server";
 
@@ -12,13 +11,11 @@ export type LoaderData = {
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await requireUserId(request);
   const lists = await getUsersLists(userId);
-  return json<LoaderData>({ lists })
-}
+  return json<LoaderData>({ lists });
+};
 
 const ListsPage: FC = () => {
-  return (
-    <Outlet />
-  )
-}
+  return <Outlet />;
+};
 
-export default ListsPage
+export default ListsPage;

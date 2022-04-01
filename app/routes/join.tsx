@@ -13,7 +13,16 @@ import { getUserId, createUserSession } from "~/session.server";
 
 import { createUser, getUserByEmailAndOrUsername } from "~/models/user.server";
 import { validateEmail } from "~/utils";
-import { Container, Space, TextInput, Input, Group, Button, Switch, Text } from "@mantine/core";
+import {
+  Container,
+  Space,
+  TextInput,
+  Input,
+  Group,
+  Button,
+  Switch,
+  Text,
+} from "@mantine/core";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request);
@@ -70,7 +79,6 @@ export const action: ActionFunction = async ({ request }) => {
       { status: 400 }
     );
   }
-
 
   const existingUser = await getUserByEmailAndOrUsername({ email, username });
   if (existingUser) {
@@ -172,18 +180,12 @@ const Join: React.FC = () => {
         <Space h="md" />
         <Group style={{ justifyContent: "space-between" }}>
           <Group spacing="lg">
-            <Button
-              type="submit"
-            >
-              Sign up
-            </Button>
+            <Button type="submit">Sign up</Button>
             <Switch name="remember" id="remember" label="Remember me?" />
           </Group>
           <Space h="md" />
           <Group spacing="sm">
-            <Text size="sm">
-              Have an account?
-            </Text>
+            <Text size="sm">Have an account?</Text>
             <Button
               variant="subtle"
               component={Link}
@@ -196,10 +198,9 @@ const Join: React.FC = () => {
             </Button>
           </Group>
         </Group>
-
       </Form>
     </Container>
   );
-}
+};
 
-export default Join
+export default Join;

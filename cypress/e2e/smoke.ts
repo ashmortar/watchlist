@@ -24,6 +24,6 @@ describe("smoke tests", () => {
 
     cy.findByTestId("your-lists").click();
     cy.findByTestId("logout-button").click();
-    cy.findByTestId("login-button")
+    cy.findByTestId("login-button");
   });
 });

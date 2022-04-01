@@ -9,7 +9,7 @@ module.exports = {
     "prettier",
   ],
   rules: {
-    '@typescript-eslint/explicit-module-boundary-types': 'error',
+    "@typescript-eslint/explicit-module-boundary-types": "error",
   },
   // we're using vitest which has a very similar API to jest
   // (so the linting plugins work nicely), but it we have to explicitly

@@ -12,7 +12,16 @@ import { createUserSession, getUserId } from "~/session.server";
 import { verifyLogin } from "~/models/user.server";
 import { validateEmail } from "~/utils";
 import { FC, useEffect, useRef } from "react";
-import { Button, Container, Group, Input, Space, Switch, Text, TextInput } from "@mantine/core";
+import {
+  Button,
+  Container,
+  Group,
+  Input,
+  Space,
+  Switch,
+  Text,
+  TextInput,
+} from "@mantine/core";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request);
@@ -38,12 +47,17 @@ export const action: ActionFunction = async ({ request }) => {
 
   if (!username && !email) {
     return json<ActionData>(
-      { errors: { username: "Username or email is required", email: "Email or username is required" } },
+      {
+        errors: {
+          username: "Username or email is required",
+          email: "Email or username is required",
+        },
+      },
       { status: 400 }
     );
   }
 
-  if (username && typeof username !== 'string') {
+  if (username && typeof username !== "string") {
     return json<ActionData>(
       { errors: { username: "Username is invalid" } },
       { status: 400 }
@@ -94,7 +108,6 @@ export const meta: MetaFunction = () => {
   };
 };
 
-
 const LoginPage: FC = () => {
   const [searchParams] = useSearchParams();
   const redirectTo = searchParams.get("redirectTo") || "/lists";
@@ -135,7 +148,9 @@ const LoginPage: FC = () => {
               </Text>
             )}
           </Group>
-          <Text style={{ paddingTop: 20 }} size="sm">or</Text>
+          <Text style={{ paddingTop: 20 }} size="sm">
+            or
+          </Text>
           <Group style={{ flexGrow: "1" }} direction="column">
             <TextInput
               style={{ width: "100%" }}
@@ -175,18 +190,12 @@ const LoginPage: FC = () => {
         <Space h="md" />
         <Group style={{ justifyContent: "space-between" }}>
           <Group spacing="lg">
-            <Button
-              type="submit"
-            >
-              Log in
-            </Button>
+            <Button type="submit">Log in</Button>
             <Switch name="remember" id="remember" label="Remember me?" />
           </Group>
           <Space h="md" />
           <Group spacing="sm">
-            <Text size="sm">
-              Need an account?
-            </Text>
+            <Text size="sm">Need an account?</Text>
             <Button
               variant="subtle"
               component={Link}
@@ -202,6 +211,6 @@ const LoginPage: FC = () => {
       </Form>
     </Container>
   );
-}
+};
 
 export default LoginPage;
