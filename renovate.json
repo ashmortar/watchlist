@@ -4,7 +4,6 @@
     ":rebaseStalePrs"
   ],
   "baseBranches": [
-    "main",
     "dev"
   ],
   "packageRules": [
