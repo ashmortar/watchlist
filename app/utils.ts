@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { useMatches } from "remix";
 
 import type { User } from "~/models/user.server";
+import { List } from "./models/list.server";
 
 /**
  * This base hook is used in other hooks to quickly search for specific data
@@ -44,4 +45,12 @@ export function useUser(): User {
 
 export function validateEmail(email: unknown): email is string {
   return typeof email === "string" && email.length > 3 && email.includes("@");
+}
+
+export function useLists(): List[] {
+  const data = useMatchesData("routes/lists");
+  if (!data || !Array.isArray(data.lists)) {
+    return [];
+  }
+  return data.lists;
 }

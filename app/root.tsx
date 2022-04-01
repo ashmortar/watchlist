@@ -1,5 +1,7 @@
 import {
+  Form,
   json,
+  Link,
   Links,
   LiveReload,
   Meta,
@@ -11,8 +13,8 @@ import {
 import type { MetaFunction, LoaderFunction } from "remix";
 
 import { getUser } from "./session.server";
-import { AppShell, Burger, Header, MantineProvider, MediaQuery, Navbar, Text, useMantineTheme } from "@mantine/core";
-import { useState } from "react";
+import { AppShell, Burger, Button, Group, Header, MantineProvider, MediaQuery, Navbar, Text, useMantineTheme } from "@mantine/core";
+import { FC, useState } from "react";
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
@@ -25,12 +27,13 @@ type LoaderData = {
 };
 
 export const loader: LoaderFunction = async ({ request }) => {
+  const user = await getUser(request);
   return json<LoaderData>({
-    user: await getUser(request),
+    user,
   });
 };
 
-export default function App() {
+const App: FC = () => {
   const { user } = useLoaderData<LoaderData>();
   const [opened, setOpened] = useState(false);
   const theme = useMantineTheme()
@@ -59,9 +62,21 @@ export default function App() {
                 // when viewport size is less than theme.breakpoints.sm navbar width is 100%
                 // viewport size > theme.breakpoints.sm – width is 300px
                 // viewport size > theme.breakpoints.lg – width is 400px
-                width={{ sm: 300, lg: 400 }}
+                width={{ sm: 125, lg: 125 }}
               >
-                <Text>Application navbar</Text>
+                {user ? (
+                  <>
+
+                    <Button variant="subtle" to={"/lists"} component={Link}>Lists</Button>
+                    <Button variant="subtle" to={"/profile"} component={Link}>Profile</Button>
+                    <Form style={{ alignSelf: "center" }} action="/logout" method="post"><Button type="submit" variant="subtle">Logout</Button></Form>
+                  </>
+                ) : (
+                  <>
+                    <Button variant="subtle" to={"/login"} component={Link}>Log In</Button>
+                    <Button variant="subtle" to={"/join"} component={Link}>Join</Button>
+                  </>
+                )}
               </Navbar>
             }
             header={
@@ -77,13 +92,14 @@ export default function App() {
                       mr="xl"
                     />
                   </MediaQuery>
-
-                  <Text size="lg">Watchlist</Text>
+                  <Button component={Link} to="/" variant="subtle" size="lg">Watchlist</Button>
                 </div>
               </Header>
             }
           >
-            <Outlet />
+            <Group direction="column" style={{ minHeight: "100%", minWidth: "100%", alignItems: "flex-start", justifyContent: "flex-start" }}>
+              <Outlet />
+            </Group>
           </AppShell>
         </MantineProvider>
         <ScrollRestoration />
@@ -93,3 +109,5 @@ export default function App() {
     </html>
   );
 }
+
+export default App;

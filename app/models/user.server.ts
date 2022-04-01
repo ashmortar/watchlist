@@ -5,20 +5,22 @@ import { prisma } from "~/db.server";
 
 export type { User } from "@prisma/client";
 
-export async function getUserById(id: User["id"]) {
+export async function getUserById(id: User["id"]): Promise<User | null> {
   return prisma.user.findUnique({ where: { id } });
 }
 
-export async function getUserByEmail(email: User["email"]) {
-  return prisma.user.findUnique({ where: { email } });
+export async function getUserByEmailAndOrUsername({ email, username }: { email?: User["email"], username?: User["username"] }): Promise<User | null> {
+  const args = { ...(email ? { email } : {}), ...(username ? { username } : {}) };
+  return prisma.user.findUnique({ where: args });
 }
 
-export async function createUser(email: User["email"], password: string) {
+export async function createUser({ email, password, username }: { email: User["email"], password: string, username: User["username"] }): Promise<User> {
   const hashedPassword = await bcrypt.hash(password, 10);
 
   return prisma.user.create({
     data: {
       email,
+      username,
       password: {
         create: {
           hash: hashedPassword,
@@ -28,16 +30,18 @@ export async function createUser(email: User["email"], password: string) {
   });
 }
 
-export async function deleteUserByEmail(email: User["email"]) {
+export async function deleteUserByEmail(email: User["email"]): Promise<User | null> {
   return prisma.user.delete({ where: { email } });
 }
 
-export async function verifyLogin(
-  email: User["email"],
+export async function verifyLogin({ email, username, password }: {
+  email: User["email"] | null,
+  username: User["username"] | null,
   password: Password["hash"]
-) {
+}): Promise<User | null> {
+  const where = email ? { email } : username ? { username } : {};
   const userWithPassword = await prisma.user.findUnique({
-    where: { email },
+    where,
     include: {
       password: true,
     },

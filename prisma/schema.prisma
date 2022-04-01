@@ -8,14 +8,17 @@ generator client {
 }
 
 model User {
-  id    String @id @default(cuid())
-  email String @unique
+  id       String @id @default(cuid())
+  email    String @unique
+  username String @unique @default(cuid())
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  password Password?
-  notes    Note[]
+  password   Password?
+  lists      List[]
+  listMember ListMember[]
+  ratings    Rating[]
 }
 
 model Password {
@@ -25,14 +28,50 @@ model Password {
   userId String @unique
 }
 
-model Note {
-  id    String @id @default(cuid())
-  title String
-  body  String
-
+model ListMember {
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId    String
+  list      List     @relation(fields: [listId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  listId    String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId String
+  @@id([userId, listId])
+}
+
+model List {
+  id        String       @id @default(cuid())
+  name      String       @unique
+  owner     User         @relation(fields: [ownerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  ownerId   String
+  slug      String       @unique
+  members   ListMember[]
+  public    Boolean      @default(false)
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+  items     Item[]
+}
+
+model Item {
+  id        String   @id @default(cuid())
+  list      List     @relation(fields: [listId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  listId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  itemType  String
+  itemJson  String
+  rating    Rating[]
+}
+
+model Rating {
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId    String
+  item      Item     @relation(fields: [itemId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  itemId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  watched   Boolean
+  rating    Int
+
+  @@id([userId, itemId])
 }
