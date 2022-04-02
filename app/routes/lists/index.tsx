@@ -9,7 +9,6 @@ const ListsIndexPage: FC = () => {
   return (
     <>
       <Group style={{ alignItems: "flex-start" }}>
-        <Text size="xl">Your Lists</Text>
         <Button
           style={{ padding: 0, alignItems: "flex-end" }}
           variant="subtle"

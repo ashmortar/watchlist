@@ -113,15 +113,21 @@ const App: FC = () => {
             header={
               <Header height={70} p="md">
                 {/* Handle other responsive styles with MediaQuery component or createStyles function */}
+
                 <div
                   style={{
                     display: "flex",
+                    position: "relative",
                     alignItems: "center",
                     height: "100%",
+                    width: "100%",
+                    flex: 1,
+                    justifyContent: "center"
                   }}
                 >
                   <MediaQuery largerThan="sm" styles={{ display: "none" }}>
                     <Burger
+                      style={{ position: "absolute", left: 0 }}
                       opened={opened}
                       onClick={() => setOpened((o) => !o)}
                       size="sm"
@@ -129,24 +135,27 @@ const App: FC = () => {
                       mr="xl"
                     />
                   </MediaQuery>
+
                   <Button component={Link} to="/" variant="subtle" size="lg">
                     Watchlist
                   </Button>
+
                 </div>
+
               </Header>
             }
           >
-            <Group
-              direction="column"
-              style={{
-                minHeight: "100%",
-                minWidth: "100%",
-                alignItems: "flex-start",
-                justifyContent: "flex-start",
-              }}
-            >
-              <Outlet />
-            </Group>
+            <MediaQuery smallerThan="sm" styles={{ alignItems: "center" }}>
+              <Group
+                direction="column"
+                style={{
+                  minHeight: "100%",
+                  minWidth: "100%",
+                }}
+              >
+                <Outlet />
+              </Group>
+            </MediaQuery>
           </AppShell>
         </MantineProvider>
         <ScrollRestoration />
