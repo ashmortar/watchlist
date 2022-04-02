@@ -31,7 +31,12 @@ import { requireUser } from "~/session.server";
 import { BadRequestResponse, NotFoundResponse } from "~/response-helpers";
 
 function isItem(item: any): item is MovieResult | TvResult {
-  return item && typeof item === "object" && typeof item.id === "number" && (item.media_type === "movie" || item.media_type === "tv");
+  return (
+    item &&
+    typeof item === "object" &&
+    typeof item.id === "number" &&
+    (item.media_type === "movie" || item.media_type === "tv")
+  );
 }
 
 export type LoaderData = {
@@ -59,7 +64,7 @@ export const action: ActionFunction = async ({ request, params }) => {
     if (typeof itemId !== "string") {
       throw BadRequestResponse();
     }
-    await removeListItem(itemId)
+    await removeListItem(itemId);
   }
 
   return json({ list: await getListBySlug(slug) });
@@ -98,14 +103,17 @@ const DropdownItem = forwardRef<HTMLDivElement, ItemProps>(
           {(item.poster_path || item.backdrop_path) && (
             <img
               height={70}
-              src={`https://image.tmdb.org/t/p/w500${item.poster_path ?? item.backdrop_path
-                }`}
+              src={`https://image.tmdb.org/t/p/w500${
+                item.poster_path ?? item.backdrop_path
+              }`}
               alt={`movie poster for ${others.label}`}
             />
           )}
           <Group direction="column">
             <MediaQuery smallerThan="sm" styles={{ size: "sm" }}>
-              <Text>{item.media_type === "movie" ? item.title : item.name}</Text>
+              <Text>
+                {item.media_type === "movie" ? item.title : item.name}
+              </Text>
             </MediaQuery>
             <Text size="xs" color="dimmed">
               {item.vote_average} ⭐ {item.vote_count} votes
@@ -171,7 +179,7 @@ const ListPage: FC = () => {
           minHeight: "180px",
           borderRadius: "5px",
           maxWidth: "600px",
-          boxShadow: "0px 0px 5px rgba(0,0,0,0.2)"
+          boxShadow: "0px 0px 5px rgba(0,0,0,0.2)",
         }}
       >
         <Text size="xl">{list?.name}</Text>
@@ -219,14 +227,26 @@ const ListPage: FC = () => {
             Add
           </Button>
         </Group>
-        <adder.Form ref={formRef} method="post" action={`/lists/${slug}`} style={{ display: "hidden", height: "0" }}>
+        <adder.Form
+          ref={formRef}
+          method="post"
+          action={`/lists/${slug}`}
+          style={{ display: "hidden", height: "0" }}
+        >
           <input type="hidden" name="itemJson" value={itemJson} />
         </adder.Form>
       </Group>
-      <div style={{
-        zIndex: 900,
-        background: "linear-gradient(to bottom, rgba(255,255,255,1) 30%,rgba(200,200,200,0) 100%)", height: 30, width: "100vw", position: "fixed", top: 260
-      }} />
+      <div
+        style={{
+          zIndex: 900,
+          background:
+            "linear-gradient(to bottom, rgba(255,255,255,1) 30%,rgba(200,200,200,0) 100%)",
+          height: 30,
+          width: "100vw",
+          position: "fixed",
+          top: 260,
+        }}
+      />
       <ul
         style={{
           width: "100%",
@@ -242,10 +262,12 @@ const ListPage: FC = () => {
             <Group
               direction="row"
               style={{
-                flex: 1, justifyContent: "space-between",
-                boxShadow: "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)",
+                flex: 1,
+                justifyContent: "space-between",
+                boxShadow:
+                  "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)",
                 transition: "all 0.3s cubic-bezier(.25,.8,.25,1)",
-                padding: '1rem',
+                padding: "1rem",
                 borderRadius: "5px",
               }}
             >
@@ -273,7 +295,7 @@ const ListPage: FC = () => {
                   onClick={() => {
                     const data = new FormData();
                     data.append("itemId", id);
-                    adder.submit(data, { method: "delete" })
+                    adder.submit(data, { method: "delete" });
                   }}
                 >
                   Remove

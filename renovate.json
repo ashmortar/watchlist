@@ -1,20 +1,10 @@
 {
-  "extends": [
-    "config:base",
-    ":rebaseStalePrs"
-  ],
-  "baseBranches": [
-    "dev"
-  ],
+  "extends": ["config:base", ":rebaseStalePrs"],
+  "baseBranches": ["dev"],
   "packageRules": [
     {
-      "matchPackagePatterns": [
-        "*"
-      ],
-      "matchUpdateTypes": [
-        "minor",
-        "patch"
-      ],
+      "matchPackagePatterns": ["*"],
+      "matchUpdateTypes": ["minor", "patch"],
       "groupName": "all non-major dependencies",
       "groupSlug": "all-minor-patch"
     }
