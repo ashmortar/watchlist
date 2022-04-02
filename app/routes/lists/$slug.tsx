@@ -16,6 +16,7 @@ import {
   SelectItemProps,
   Text,
   Button,
+  MediaQuery,
 } from "@mantine/core";
 import { useUser } from "~/utils";
 import { MovieResult, TvResult } from "~/services/moviedb.server";
@@ -23,23 +24,44 @@ import {
   addListItem,
   getListBySlug,
   getListMember,
+  removeListItem,
 } from "~/models/list.server";
 import { SearchResult } from "../multi-search";
 import { requireUser } from "~/session.server";
 import { BadRequestResponse, NotFoundResponse } from "~/response-helpers";
+
+function isItem(item: any): item is MovieResult | TvResult {
+  return item && typeof item === "object" && typeof item.id === "number" && (item.media_type === "movie" || item.media_type === "tv");
+}
 
 export type LoaderData = {
   list: Awaited<ReturnType<typeof getListBySlug>>;
 };
 
 export const action: ActionFunction = async ({ request, params }) => {
-  const formData = await request.formData();
-  const itemJson = formData.get("itemJson");
   const { slug } = params;
-  if (typeof itemJson !== "string" || typeof slug !== "string") {
+  const formData = await request.formData();
+  if (typeof slug !== "string") {
     throw BadRequestResponse();
   }
-  await addListItem(slug, JSON.parse(itemJson));
+  if (request.method === "POST") {
+    const itemJson = formData.get("itemJson");
+    if (typeof itemJson !== "string") {
+      throw BadRequestResponse();
+    }
+    const item = JSON.parse(itemJson);
+    if (!isItem(item)) {
+      throw BadRequestResponse();
+    }
+    await addListItem(slug, item);
+  } else if (request.method === "DELETE") {
+    const itemId = formData.get("itemId");
+    if (typeof itemId !== "string") {
+      throw BadRequestResponse();
+    }
+    await removeListItem(itemId)
+  }
+
   return json({ list: await getListBySlug(slug) });
 };
 
@@ -76,14 +98,15 @@ const DropdownItem = forwardRef<HTMLDivElement, ItemProps>(
           {(item.poster_path || item.backdrop_path) && (
             <img
               height={70}
-              src={`https://image.tmdb.org/t/p/w500${
-                item.poster_path ?? item.backdrop_path
-              }`}
+              src={`https://image.tmdb.org/t/p/w500${item.poster_path ?? item.backdrop_path
+                }`}
               alt={`movie poster for ${others.label}`}
             />
           )}
           <Group direction="column">
-            <Text>{item.media_type === "movie" ? item.title : item.name}</Text>
+            <MediaQuery smallerThan="sm" styles={{ size: "sm" }}>
+              <Text>{item.media_type === "movie" ? item.title : item.name}</Text>
+            </MediaQuery>
             <Text size="xs" color="dimmed">
               {item.vote_average} ⭐ {item.vote_count} votes
             </Text>
@@ -139,22 +162,24 @@ const ListPage: FC = () => {
       <Group
         direction="column"
         style={{
-          background:
-            "linear-gradient(to bottom, rgba(255,255,255,1) 85%,rgba(200,200,200,0) 100%)",
-          zIndex: 2,
+          background: "#FFF",
+          zIndex: 1000,
           position: "sticky",
-          top: 70,
+          top: 90,
           width: "100%",
           padding: "1rem",
-          height: "180px",
+          minHeight: "180px",
+          borderRadius: "5px",
+          maxWidth: "600px",
+          boxShadow: "0px 0px 5px rgba(0,0,0,0.2)"
         }}
       >
         <Text size="xl">{list?.name}</Text>
         <Group
           style={{
+            display: "flex",
             alignItems: "flex-end",
             justifyContent: "space-between",
-            maxWidth: "600px",
             width: "100%",
           }}
         >
@@ -163,8 +188,10 @@ const ListPage: FC = () => {
             action="/multi-search"
             ref={searchRef}
             autoComplete="off"
+            style={{ flex: 2 }}
           >
             <Select
+              style={{ width: "100%" }}
               label="Search Movies and Television"
               id="query"
               name="query"
@@ -181,39 +208,50 @@ const ListPage: FC = () => {
               }}
               autoComplete="off"
               searchable
-              wrapperProps={{ style: { width: "400px" } }}
               nothingFound="No results"
             />
           </movies.Form>
           <Button
             disabled={!itemJson}
-            style={{ width: 100 }}
             type="button"
             onClick={() => adder.submit(formRef.current)}
           >
             Add
           </Button>
         </Group>
+        <adder.Form ref={formRef} method="post" action={`/lists/${slug}`} style={{ display: "hidden", height: "0" }}>
+          <input type="hidden" name="itemJson" value={itemJson} />
+        </adder.Form>
       </Group>
-      <adder.Form ref={formRef} method="post" action={`/lists/${slug}`}>
-        <input type="hidden" name="itemJson" value={itemJson} />
-      </adder.Form>
+      <div style={{
+        zIndex: 900,
+        background: "linear-gradient(to bottom, rgba(255,255,255,1) 30%,rgba(200,200,200,0) 100%)", height: 30, width: "100vw", position: "fixed", top: 260
+      }} />
       <ul
         style={{
           width: "100%",
           maxWidth: "600px",
           padding: 0,
+          margin: 0,
           listStyle: "none",
+          zIndex: 1,
         }}
       >
-        {list?.items.map(({ item }) => (
-          <li key={item.id} style={{ padding: "1rem 0", flex: 1 }}>
+        {list?.items.map(({ item, id }) => (
+          <li key={item.id} style={{ padding: "1rem 0", flex: 1, zIndex: 1 }}>
             <Group
               direction="row"
-              style={{ flex: 1, justifyContent: "space-between" }}
+              style={{
+                flex: 1, justifyContent: "space-between",
+                boxShadow: "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)",
+                transition: "all 0.3s cubic-bezier(.25,.8,.25,1)",
+                padding: '1rem',
+                borderRadius: "5px",
+              }}
             >
               <img
-                height={150}
+                height="150px"
+                style={{ zIndex: 1 }}
                 src={`https://image.tmdb.org/t/p/w500${item.backdrop_path}`}
                 alt={`movie poster`}
               />
@@ -232,10 +270,11 @@ const ListPage: FC = () => {
                 <Button
                   style={{ width: 100 }}
                   type="button"
-                  disabled
-                  onClick={() =>
-                    adder.submit(formRef.current, { method: "delete" })
-                  }
+                  onClick={() => {
+                    const data = new FormData();
+                    data.append("itemId", id);
+                    adder.submit(data, { method: "delete" })
+                  }}
                 >
                   Remove
                 </Button>
