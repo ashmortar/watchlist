@@ -170,7 +170,6 @@ const ListPage: FC = () => {
         direction="column"
         style={{
           background: "#FFF",
-          zIndex: 100,
           position: "sticky",
           top: 90,
           width: "100%",
@@ -179,6 +178,7 @@ const ListPage: FC = () => {
           borderRadius: "5px",
           maxWidth: "600px",
           boxShadow: "0px 0px 5px rgba(0,0,0,0.2)",
+          zIndex: 3,
         }}
       >
         <Text size="xl">{list?.name}</Text>
@@ -237,13 +237,13 @@ const ListPage: FC = () => {
       </Group>
       <div
         style={{
-          zIndex: 99,
           background:
             "linear-gradient(to bottom, rgba(255,255,255,1) 85%,rgba(200,200,200,0) 100%)",
           height: 240,
           width: "100vw",
           position: "fixed",
           top: 70,
+          zIndex: 2,
         }}
       />
       <ul
@@ -257,7 +257,7 @@ const ListPage: FC = () => {
         }}
       >
         {list?.items.map(({ item, id }) => (
-          <li key={item.id} style={{ padding: "1rem 0", flex: 1, zIndex: 1 }}>
+          <li key={item.id} style={{ padding: "1rem 0", flex: 1, }}>
             <Group
               direction="row"
               style={{
@@ -272,7 +272,6 @@ const ListPage: FC = () => {
             >
               <img
                 height="150px"
-                style={{ zIndex: 1 }}
                 src={`https://image.tmdb.org/t/p/w500${item.backdrop_path}`}
                 alt={`movie poster`}
               />

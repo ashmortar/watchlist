@@ -143,17 +143,18 @@ const App: FC = () => {
               </Header>
             }
           >
-            <MediaQuery smallerThan="sm" styles={{ alignItems: "center" }}>
-              <Group
-                direction="column"
-                style={{
-                  minHeight: "100%",
-                  minWidth: "100%",
-                }}
-              >
-                <Outlet />
-              </Group>
-            </MediaQuery>
+
+            <Group
+              direction="column"
+              style={{
+                minHeight: "100%",
+                minWidth: "100%",
+                alignItems: "center",
+              }}
+            >
+              <Outlet />
+            </Group>
+
           </AppShell>
         </MantineProvider>
         <ScrollRestoration />
