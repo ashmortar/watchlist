@@ -103,9 +103,8 @@ const DropdownItem = forwardRef<HTMLDivElement, ItemProps>(
           {(item.poster_path || item.backdrop_path) && (
             <img
               height={70}
-              src={`https://image.tmdb.org/t/p/w500${
-                item.poster_path ?? item.backdrop_path
-              }`}
+              src={`https://image.tmdb.org/t/p/w500${item.poster_path ?? item.backdrop_path
+                }`}
               alt={`movie poster for ${others.label}`}
             />
           )}
@@ -171,7 +170,7 @@ const ListPage: FC = () => {
         direction="column"
         style={{
           background: "#FFF",
-          zIndex: 1000,
+          zIndex: 100,
           position: "sticky",
           top: 90,
           width: "100%",
@@ -238,13 +237,13 @@ const ListPage: FC = () => {
       </Group>
       <div
         style={{
-          zIndex: 900,
+          zIndex: 99,
           background:
-            "linear-gradient(to bottom, rgba(255,255,255,1) 30%,rgba(200,200,200,0) 100%)",
-          height: 30,
+            "linear-gradient(to bottom, rgba(255,255,255,1) 85%,rgba(200,200,200,0) 100%)",
+          height: 240,
           width: "100vw",
           position: "fixed",
-          top: 260,
+          top: 70,
         }}
       />
       <ul
