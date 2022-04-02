@@ -1,3 +1,13 @@
+# Watchlist
+
+#### [Production](https://watchlist.fly.dev)
+![Production Deploytment](https://github.com/ashmortar/watchlist/actions/workflows/deploy.yml/badge.svg?branch=main)  [![CodeQL](https://github.com/ashmortar/watchlist/actions/workflows/codeql-analysis.yml/badge.svg?branch=main)](https://github.com/ashmortar/watchlist/actions/workflows/codeql-analysis.yml) [![CodeFactor](https://www.codefactor.io/repository/github/ashmortar/watchlist/badge)](https://www.codefactor.io/repository/github/ashmortar/watchlist)
+
+#### [Staging](https://watchlist-staging.fly.dev)
+![Production Deploytment](https://github.com/ashmortar/watchlist/actions/workflows/deploy.yml/badge.svg?branch=dev)  [![CodeQL](https://github.com/ashmortar/watchlist/actions/workflows/codeql-analysis.yml/badge.svg?branch=dev)](https://github.com/ashmortar/watchlist/actions/workflows/codeql-analysis.yml) [![CodeFactor](https://www.codefactor.io/repository/github/ashmortar/watchlist/badge/dev)](https://www.codefactor.io/repository/github/ashmortar/watchlist/overview/dev)
+
+Watchlist integrates with [themoviedb(TMDB)](https://www.themoviedb.org/?language=en-US) to allow users to create private, shared and public movie/television watch lists.
+
 # Remix Indie Stack
 
 ![The Remix Indie Stack](https://repository-images.githubusercontent.com/465928257/a241fa49-bd4d-485a-a2a5-5cb8e4ee0abf)

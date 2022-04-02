@@ -11,6 +11,7 @@ module.exports = (
     screenshotOnRunFailure: !process.env.CI,
   };
   Object.assign(config, configOverrides);
+  require('@cypress/code-coverage/task')(on, config)
 
   // To use this:
   // cy.task('log', whateverYouWantInTheTerminal)
