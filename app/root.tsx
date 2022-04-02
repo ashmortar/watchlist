@@ -122,7 +122,7 @@ const App: FC = () => {
                     height: "100%",
                     width: "100%",
                     flex: 1,
-                    justifyContent: "center"
+                    justifyContent: "center",
                   }}
                 >
                   <MediaQuery largerThan="sm" styles={{ display: "none" }}>
@@ -139,9 +139,7 @@ const App: FC = () => {
                   <Button component={Link} to="/" variant="subtle" size="lg">
                     Watchlist
                   </Button>
-
                 </div>
-
               </Header>
             }
           >
