@@ -11,10 +11,5 @@ export default defineConfig({
     globals: true,
     environment: "happy-dom",
     setupFiles: ["./test/setup-test-env.ts"],
-    coverage: {
-      enabled: true,
-      reportsDirectory: "./coverage",
-      cleanOnRerun: true,
-    },
   },
 });
