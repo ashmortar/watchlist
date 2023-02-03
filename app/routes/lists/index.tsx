@@ -1,25 +1,26 @@
-import { Button, Group, Text } from "@mantine/core";
-import { FC } from "react";
-import { Link } from "remix";
+import type { FC } from "react"
 
-import { useLists } from "~/utils";
+import { Button, Group, Text } from "@mantine/core"
+import { Link } from "@remix-run/react"
+
+import { useLists } from "~/utils"
 
 const ListsIndexPage: FC = () => {
-  const lists = useLists();
+  const lists = useLists()
   return (
     <>
-      <Group style={{ alignItems: "flex-start" }}>
+      <Group style={{ alignItems: `flex-start` }}>
         <Button
-          style={{ padding: 0, alignItems: "flex-end" }}
+          style={{ padding: 0, alignItems: `flex-end` }}
           variant="subtle"
           to="/lists/create"
           component={Link}
         >
-          Create a New List{" "}
+          Create a New List{` `}
         </Button>
       </Group>
       {lists.length > 0 ? (
-        <ul style={{ padding: 0, listStyle: "none" }}>
+        <ul style={{ padding: 0, listStyle: `none` }}>
           {lists.map((list) => (
             <li key={list.id}>
               <Button
@@ -38,7 +39,7 @@ const ListsIndexPage: FC = () => {
         <Text>You have no lists</Text>
       )}
     </>
-  );
-};
+  )
+}
 
-export default ListsIndexPage;
+export default ListsIndexPage

@@ -1,18 +1,5 @@
-import * as React from "react";
-import type { ActionFunction, LoaderFunction, MetaFunction } from "remix";
-import {
-  Form,
-  Link,
-  redirect,
-  useSearchParams,
-  json,
-  useActionData,
-} from "remix";
+import * as React from "react"
 
-import { getUserId, createUserSession } from "~/session.server";
-
-import { createUser, getUserByEmailAndOrUsername } from "~/models/user.server";
-import { validateEmail } from "~/utils";
 import {
   Container,
   Space,
@@ -22,103 +9,114 @@ import {
   Button,
   Switch,
   Text,
-} from "@mantine/core";
+} from "@mantine/core"
+import { useSearchParams, useActionData, Form, Link } from "@remix-run/react"
+import type {
+  ActionFunction,
+  LoaderFunction,
+  MetaFunction,
+} from "@remix-run/server-runtime"
+import { json, redirect } from "@remix-run/server-runtime"
+
+import { createUser, getUserByEmailAndOrUsername } from "~/models/user.server"
+import { getUserId, createUserSession } from "~/session.server"
+import { validateEmail } from "~/utils"
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const userId = await getUserId(request);
-  if (userId) return redirect("/");
-  return json({});
-};
+  const userId = await getUserId(request)
+  if (userId) return redirect(`/`)
+  return json({})
+}
 
 interface ActionData {
   errors: {
-    email?: string;
-    password?: string;
-    username?: string;
-  };
+    email?: string
+    password?: string
+    username?: string
+  }
 }
 
 export const action: ActionFunction = async ({ request }) => {
-  const formData = await request.formData();
-  const email = formData.get("email");
-  const password = formData.get("password");
-  const username = formData.get("username");
-  const redirectTo = formData.get("redirectTo");
+  const formData = await request.formData()
+  const email = formData.get(`email`)
+  const password = formData.get(`password`)
+  const username = formData.get(`username`)
+  const redirectTo = formData.get(`redirectTo`)
 
   if (!validateEmail(email)) {
     return json<ActionData>(
-      { errors: { email: "Email is invalid" } },
-      { status: 400 }
-    );
+      { errors: { email: `Email is invalid` } },
+      { status: 400 },
+    )
   }
 
-  if (typeof password !== "string") {
+  if (typeof password !== `string`) {
     return json<ActionData>(
-      { errors: { password: "Password is required" } },
-      { status: 400 }
-    );
+      { errors: { password: `Password is required` } },
+      { status: 400 },
+    )
   }
 
   if (password.length < 8) {
     return json<ActionData>(
-      { errors: { password: "Password is too short" } },
-      { status: 400 }
-    );
+      { errors: { password: `Password is too short` } },
+      { status: 400 },
+    )
   }
 
-  if (typeof username !== "string") {
+  if (typeof username !== `string`) {
     return json<ActionData>(
-      { errors: { username: "Username is required" } },
-      { status: 400 }
-    );
+      { errors: { username: `Username is required` } },
+      { status: 400 },
+    )
   }
 
   if (username.length < 3) {
     return json<ActionData>(
-      { errors: { username: "Username is too short" } },
-      { status: 400 }
-    );
+      { errors: { username: `Username is too short` } },
+      { status: 400 },
+    )
   }
 
-  const existingUser = await getUserByEmailAndOrUsername({ email, username });
+  const existingUser = await getUserByEmailAndOrUsername({ email, username })
   if (existingUser) {
     return json<ActionData>(
-      { errors: { email: "A user already exists with this email" } },
-      { status: 400 }
-    );
+      { errors: { email: `A user already exists with this email` } },
+      { status: 400 },
+    )
   }
 
-  const user = await createUser({ email, password, username });
+  const user = await createUser({ email, password, username })
 
   return createUserSession({
     request,
     userId: user.id,
     remember: false,
-    redirectTo: typeof redirectTo === "string" ? redirectTo : "/",
-  });
-};
+    redirectTo: typeof redirectTo === `string` ? redirectTo : `/`,
+  })
+}
 
 export const meta: MetaFunction = () => {
   return {
-    title: "Sign Up",
-  };
-};
+    title: `Sign Up`,
+  }
+}
 
 const Join: React.FC = () => {
-  const [searchParams] = useSearchParams();
-  const redirectTo = searchParams.get("redirectTo") ?? undefined;
-  const actionData = useActionData() as ActionData;
-  const usernameRef = React.useRef<HTMLInputElement>(null);
-  const emailRef = React.useRef<HTMLInputElement>(null);
-  const passwordRef = React.useRef<HTMLInputElement>(null);
+  const [searchParams] = useSearchParams()
+  const redirectTo = searchParams.get(`redirectTo`) ?? undefined
+  const actionData = useActionData() as ActionData
+  const usernameRef = React.useRef<HTMLInputElement>(null)
+  const emailRef = React.useRef<HTMLInputElement>(null)
+  const passwordRef = React.useRef<HTMLInputElement>(null)
 
   React.useEffect(() => {
     if (actionData?.errors?.email) {
-      emailRef.current?.focus();
+      emailRef.current?.focus()
     } else if (actionData?.errors?.password) {
-      passwordRef.current?.focus();
+      passwordRef.current?.focus()
     }
-  }, [actionData]);
+  }, [actionData])
 
   return (
     <Container size="xs">
@@ -178,7 +176,7 @@ const Join: React.FC = () => {
 
         <Input type="hidden" name="redirectTo" value={redirectTo} />
         <Space h="md" />
-        <Group style={{ justifyContent: "space-between" }}>
+        <Group style={{ justifyContent: `space-between` }}>
           <Group spacing="lg">
             <Button type="submit">Sign up</Button>
             <Switch name="remember" id="remember" label="Remember me?" />
@@ -190,7 +188,7 @@ const Join: React.FC = () => {
               variant="subtle"
               component={Link}
               to={{
-                pathname: "/login",
+                pathname: `/login`,
                 search: searchParams.toString(),
               }}
             >
@@ -200,7 +198,7 @@ const Join: React.FC = () => {
         </Group>
       </Form>
     </Container>
-  );
-};
+  )
+}
 
-export default Join;
+export default Join

@@ -2,6 +2,7 @@
   "exclude": ["./cypress"],
   "include": ["remix.env.d.ts", "**/*.ts", "**/*.tsx"],
   "compilerOptions": {
+    "forceConsistentCasingInFileNames": true,
     "lib": ["DOM", "DOM.Iterable", "ES2019"],
     "types": ["vitest/globals"],
     "isolatedModules": true,
@@ -14,7 +15,7 @@
     "strict": true,
     "baseUrl": ".",
     "paths": {
-      "~/*": ["./app/*"]
+      "~/*": ["*.ts{,x}"]
     },
     "skipLibCheck": true,
 

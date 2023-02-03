@@ -1,0 +1,6 @@
+*.config.js
+build/
+coverage/
+remix.init/index.js
+mocks/index.js
+*rc.*

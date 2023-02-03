@@ -1,18 +1,6 @@
-import {
-  Form,
-  json,
-  Link,
-  Links,
-  LiveReload,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
-  useLoaderData,
-} from "remix";
-import type { MetaFunction, LoaderFunction } from "remix";
+import { useState } from "react"
+import type { FC } from "react"
 
-import { getUser } from "./session.server";
 import {
   AppShell,
   Burger,
@@ -23,44 +11,65 @@ import {
   MediaQuery,
   Navbar,
   useMantineTheme,
-} from "@mantine/core";
-import { FC, useState } from "react";
+} from "@mantine/core"
+import {
+  Form,
+  Link,
+  Links,
+  LiveReload,
+  Meta,
+  Outlet,
+  Scripts,
+  ScrollRestoration,
+  useLoaderData,
+} from "@remix-run/react"
+import { RemixErrorBoundary } from "@remix-run/react/errorBoundaries"
+import type { MetaFunction } from "@remix-run/react/routeModules"
+import type { LoaderFunction } from "@remix-run/server-runtime"
+import { json } from "@remix-run/server-runtime"
+
+import { getUser } from "./session.server"
 
 export const meta: MetaFunction = () => ({
-  charset: "utf-8",
-  title: "Watchlist",
-  viewport: "width=device-width,initial-scale=1",
-});
+  charset: `utf-8`,
+  title: `Watchlist`,
+  viewport: `width=device-width,initial-scale=1`,
+})
 
 type LoaderData = {
-  user: Awaited<ReturnType<typeof getUser>>;
-};
+  user: Awaited<ReturnType<typeof getUser>>
+}
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const user = await getUser(request);
+  const user = await getUser(request)
   return json<LoaderData>({
     user,
-  });
-};
+  })
+}
 
 const App: FC = () => {
-  const { user } = useLoaderData<LoaderData>();
-  const [opened, setOpened] = useState(false);
-  const theme = useMantineTheme();
+  const { user } = useLoaderData<LoaderData>()
+  const [opened, setOpened] = useState(false)
+  const theme = useMantineTheme()
   return (
     <html lang="en" className="h-full">
       <head>
         <Meta />
         <Links />
+        <script
+          async
+          src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places&callback=initMap"
+        ></script>
       </head>
       <body>
         <MantineProvider
           theme={{
-            fontFamily: "Roboto, sans-serif",
+            fontFamily: `Roboto, sans-serif`,
           }}
         >
           <AppShell
-            // navbarOffsetBreakpoint controls when navbar should no longer be offset with padding-left
+            // navbarOffsetBreakpoint controls when
+            // navbar should no longer be offset with padding-left
             navbarOffsetBreakpoint="sm"
             // fixed prop on AppShell will be automatically added to Header and Navbar
             fixed
@@ -78,14 +87,14 @@ const App: FC = () => {
               >
                 {user ? (
                   <>
-                    <Button variant="subtle" to={"/lists"} component={Link}>
+                    <Button variant="subtle" to={`/lists`} component={Link}>
                       Lists
                     </Button>
-                    <Button variant="subtle" to={"/profile"} component={Link}>
+                    <Button variant="subtle" to={`/profile`} component={Link}>
                       Profile
                     </Button>
                     <Form
-                      style={{ alignSelf: "center" }}
+                      style={{ alignSelf: `center` }}
                       action="/logout"
                       method="post"
                     >
@@ -100,10 +109,10 @@ const App: FC = () => {
                   </>
                 ) : (
                   <>
-                    <Button variant="subtle" to={"/login"} component={Link}>
+                    <Button variant="subtle" to={`/login`} component={Link}>
                       Log In
                     </Button>
-                    <Button variant="subtle" to={"/join"} component={Link}>
+                    <Button variant="subtle" to={`/join`} component={Link}>
                       Join
                     </Button>
                   </>
@@ -112,22 +121,23 @@ const App: FC = () => {
             }
             header={
               <Header height={70} p="md">
-                {/* Handle other responsive styles with MediaQuery component or createStyles function */}
+                {/* Handle other responsive styles with 
+                MediaQuery component or createStyles function */}
 
                 <div
                   style={{
-                    display: "flex",
-                    position: "relative",
-                    alignItems: "center",
-                    height: "100%",
-                    width: "100%",
+                    display: `flex`,
+                    position: `relative`,
+                    alignItems: `center`,
+                    height: `100%`,
+                    width: `100%`,
                     flex: 1,
-                    justifyContent: "center",
+                    justifyContent: `center`,
                   }}
                 >
-                  <MediaQuery largerThan="sm" styles={{ display: "none" }}>
+                  <MediaQuery largerThan="sm" styles={{ display: `none` }}>
                     <Burger
-                      style={{ position: "absolute", left: 0 }}
+                      style={{ position: `absolute`, left: 0 }}
                       opened={opened}
                       onClick={() => setOpened((o) => !o)}
                       size="sm"
@@ -143,18 +153,16 @@ const App: FC = () => {
               </Header>
             }
           >
-
             <Group
               direction="column"
               style={{
-                minHeight: "100%",
-                minWidth: "100%",
-                alignItems: "center",
+                minHeight: `100%`,
+                minWidth: `100%`,
+                alignItems: `center`,
               }}
             >
               <Outlet />
             </Group>
-
           </AppShell>
         </MantineProvider>
         <ScrollRestoration />
@@ -162,7 +170,9 @@ const App: FC = () => {
         <LiveReload />
       </body>
     </html>
-  );
-};
+  )
+}
 
-export default App;
+export default App
+
+export const ErrorBoundary = RemixErrorBoundary

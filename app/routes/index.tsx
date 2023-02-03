@@ -1,17 +1,19 @@
-import { Space, Text, Button, Group } from "@mantine/core";
-import { FC } from "react";
-import { Link } from "remix";
-import { useOptionalUser } from "~/utils";
+import type { FC } from "react"
+
+import { Space, Text, Button, Group } from "@mantine/core"
+import { Link } from "@remix-run/react"
+
+import { useOptionalUser } from "~/utils"
 
 const Index: FC = () => {
-  const user = useOptionalUser();
+  const user = useOptionalUser()
   return (
-    <Group direction="column" style={{ justifyContent: "center" }}>
+    <Group direction="column" style={{ justifyContent: `center` }}>
       <Text size="xl">Welcome to Watchlist</Text>
       <Space h="lg" />
       {user ? (
         <Button
-          style={{ width: "100%" }}
+          style={{ width: `100%` }}
           data-testid="your-lists"
           variant="subtle"
           component={Link}
@@ -25,7 +27,7 @@ const Index: FC = () => {
             data-testid="login-button"
             variant="subtle"
             component={Link}
-            to={"/login"}
+            to={`/login`}
           >
             Login
           </Button>
@@ -34,14 +36,14 @@ const Index: FC = () => {
             data-testid="join-button"
             variant="subtle"
             component={Link}
-            to={"/join"}
+            to={`/join`}
           >
             Join
           </Button>
         </Group>
       )}
     </Group>
-  );
-};
+  )
+}
 
-export default Index;
+export default Index

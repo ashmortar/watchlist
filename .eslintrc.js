@@ -1,16 +1,15 @@
 /**
  * @type {import('@types/eslint').Linter.BaseConfig}
  */
-module.exports = {
+ module.exports = {
+
   extends: [
-    "@remix-run/eslint-config",
-    "@remix-run/eslint-config/node",
-    "@remix-run/eslint-config/jest",
-    "prettier",
+    `@eyecuelab/react`,
+    // "@remix-run/eslint-config",
+    // "@remix-run/eslint-config/node",
+    // "@remix-run/eslint-config/jest",
+    // "prettier",
   ],
-  rules: {
-    "@typescript-eslint/explicit-module-boundary-types": "error",
-  },
   // we're using vitest which has a very similar API to jest
   // (so the linting plugins work nicely), but it we have to explicitly
   // set the jest version.
@@ -19,4 +18,14 @@ module.exports = {
       version: 27,
     },
   },
-};
+  rules: {
+    quotes: `off`,
+    "@typescript-eslint/quotes": [
+        `error`,
+        `backtick`
+      ],
+  },
+  parserOptions: {
+    project: [`./tsconfig.json`, `./cypress/tsconfig.json`],
+  },
+}

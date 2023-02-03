@@ -1,4 +1,10 @@
 {
+  "[typescript, tsx]": {
+    "editor.formatOnSave": false
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
   "cSpell.words": [
     "data-testid",
     "Healthcheck",
