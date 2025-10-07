@@ -1,14 +1,34 @@
-# Watchlist
+# Watchlist 🎬
 
-#### [Production](https://watchlist.fly.dev)
+> Because life's too short to forget what you wanted to watch, and too long to remember it all without help.
 
-![Production Deploytment](https://github.com/ashmortar/watchlist/actions/workflows/deploy.yml/badge.svg?branch=main) [![CodeQL](https://github.com/ashmortar/watchlist/actions/workflows/codeql-analysis.yml/badge.svg?branch=main)](https://github.com/ashmortar/watchlist/actions/workflows/codeql-analysis.yml) [![CodeFactor](https://www.codefactor.io/repository/github/ashmortar/watchlist/badge)](https://www.codefactor.io/repository/github/ashmortar/watchlist)
+A full-stack TypeScript application for tracking movies and TV shows, built with the Remix framework and deployed with modern DevOps practices. Think of it as your personal media queue manager, but with actual engineering rigor behind it.
 
-#### [Staging](https://watchlist-staging.fly.dev)
+#### [Production](https://watchlist.fly.dev) | [Staging](https://watchlist-staging.fly.dev)
 
-![Production Deploytment](https://github.com/ashmortar/watchlist/actions/workflows/deploy.yml/badge.svg?branch=dev) [![CodeQL](https://github.com/ashmortar/watchlist/actions/workflows/codeql-analysis.yml/badge.svg?branch=dev)](https://github.com/ashmortar/watchlist/actions/workflows/codeql-analysis.yml) [![CodeFactor](https://www.codefactor.io/repository/github/ashmortar/watchlist/badge/dev)](https://www.codefactor.io/repository/github/ashmortar/watchlist/overview/dev)
+**Production:**
+![Production Deployment](https://github.com/ashmortar/watchlist/actions/workflows/deploy.yml/badge.svg?branch=main) [![CodeQL](https://github.com/ashmortar/watchlist/actions/workflows/codeql-analysis.yml/badge.svg?branch=main)](https://github.com/ashmortar/watchlist/actions/workflows/codeql-analysis.yml) [![CodeFactor](https://www.codefactor.io/repository/github/ashmortar/watchlist/badge)](https://www.codefactor.io/repository/github/ashmortar/watchlist)
 
-Watchlist integrates with [themoviedb(TMDB)](https://www.themoviedb.org/?language=en-US) to allow users to create private, shared and public movie/television watch lists.
+**Staging:**
+![Staging Deployment](https://github.com/ashmortar/watchlist/actions/workflows/deploy.yml/badge.svg?branch=dev) [![CodeQL](https://github.com/ashmortar/watchlist/actions/workflows/codeql-analysis.yml/badge.svg?branch=dev)](https://github.com/ashmortar/watchlist/actions/workflows/codeql-analysis.yml) [![CodeFactor](https://www.codefactor.io/repository/github/ashmortar/watchlist/badge/dev)](https://www.codefactor.io/repository/github/ashmortar/watchlist/overview/dev)
+
+## What is This?
+
+Watchlist integrates with [The Movie Database (TMDB)](https://www.themoviedb.org/?language=en-US) to let you create private, shared, and public movie/television watch lists. It's the result of wanting to actually build something useful while exploring the Remix framework and modern full-stack TypeScript patterns.
+
+## Skills Demonstrated
+
+This project showcases several key competencies:
+
+- **Full-Stack TypeScript**: End-to-end type safety from database to UI
+- **Modern React Patterns**: Remix's server-side rendering, progressive enhancement, and data loading strategies
+- **Database Design**: Prisma ORM with SQLite (because sometimes simple is better)
+- **Authentication & Authorization**: Cookie-based sessions with proper security practices
+- **CI/CD Pipeline**: GitHub Actions for automated testing and deployment
+- **Infrastructure as Code**: Docker containerization and Fly.io deployment
+- **Testing Strategy**: E2E with Cypress, unit tests with Vitest, and proper test isolation
+- **Code Quality**: ESLint, Prettier, TypeScript strict mode, and CodeQL security scanning
+- **API Integration**: Working with third-party APIs (TMDB) in a type-safe manner
 
 # Remix Indie Stack
 
