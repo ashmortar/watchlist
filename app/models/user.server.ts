@@ -69,7 +69,11 @@ export async function verifyLogin({
   username: User["username"] | null;
   password: Password["hash"];
 }): Promise<User | null> {
-  const where = email ? { email } : username ? { username } : {};
+  if (!email && !username) {
+    return null;
+  }
+
+  const where = email ? { email } : { username: username! };
   const userWithPassword = await prisma.user.findUnique({
     where,
     include: {
@@ -92,5 +96,5 @@ export async function verifyLogin({
 
   const { password: _password, ...userWithoutPassword } = userWithPassword;
 
-  return userWithoutPassword;
+  return userWithoutPassword as User;
 }
